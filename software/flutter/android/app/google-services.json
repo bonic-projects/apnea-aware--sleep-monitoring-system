@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "962368014904",
+    "firebase_url": "https://apneaaware-default-rtdb.firebaseio.com",
+    "project_id": "apneaaware",
+    "storage_bucket": "apneaaware.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962368014904:android:0f1e7e0d9707ae87ba74cd",
+        "android_client_info": {
+          "package_name": "com.example.apnea_aware"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7j8MMlF8Jzhf6QDROiplG29enaiEO_lc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
