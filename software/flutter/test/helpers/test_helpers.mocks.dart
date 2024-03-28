@@ -11,6 +11,7 @@ import 'package:apnea_aware/models/devices.dart' as _i12;
 import 'package:apnea_aware/services/database_service.dart' as _i11;
 import 'package:apnea_aware/services/firestore_service.dart' as _i8;
 import 'package:apnea_aware/services/user_service.dart' as _i10;
+import 'package:apnea_aware/services/videosdk_service.dart' as _i13;
 import 'package:flutter/material.dart' as _i5;
 import 'package:logger/src/logger.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -723,6 +724,28 @@ class MockFirestoreService extends _i1.Mock implements _i8.FirestoreService {
       ) as _i6.Future<bool>);
 
   @override
+  _i6.Future<bool> updateVideoId({required String? videoId}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateVideoId,
+          [],
+          {#videoId: videoId},
+        ),
+        returnValue: _i6.Future<bool>.value(false),
+        returnValueForMissingStub: _i6.Future<bool>.value(false),
+      ) as _i6.Future<bool>);
+
+  @override
+  _i6.Future<bool> deleteVideoId() => (super.noSuchMethod(
+        Invocation.method(
+          #deleteVideoId,
+          [],
+        ),
+        returnValue: _i6.Future<bool>.value(false),
+        returnValueForMissingStub: _i6.Future<bool>.value(false),
+      ) as _i6.Future<bool>);
+
+  @override
   _i6.Future<_i9.AppUser?> getUser({required String? userId}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -735,11 +758,10 @@ class MockFirestoreService extends _i1.Mock implements _i8.FirestoreService {
       ) as _i6.Future<_i9.AppUser?>);
 
   @override
-  _i6.Future<List<_i9.AppUser>> searchUsers(String? keyword) =>
-      (super.noSuchMethod(
+  _i6.Future<List<_i9.AppUser>> getUsersWithVideoId() => (super.noSuchMethod(
         Invocation.method(
-          #searchUsers,
-          [keyword],
+          #getUsersWithVideoId,
+          [],
         ),
         returnValue: _i6.Future<List<_i9.AppUser>>.value(<_i9.AppUser>[]),
         returnValueForMissingStub:
@@ -802,9 +824,25 @@ class MockUserService extends _i1.Mock implements _i10.UserService {
       ) as bool);
 
   @override
+  List<_i9.AppUser?> get idUser => (super.noSuchMethod(
+        Invocation.getter(#idUser),
+        returnValue: <_i9.AppUser?>[],
+        returnValueForMissingStub: <_i9.AppUser?>[],
+      ) as List<_i9.AppUser?>);
+
+  @override
   void logout() => super.noSuchMethod(
         Invocation.method(
           #logout,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void deleteVideoId() => super.noSuchMethod(
+        Invocation.method(
+          #deleteVideoId,
           [],
         ),
         returnValueForMissingStub: null,
@@ -822,6 +860,16 @@ class MockUserService extends _i1.Mock implements _i10.UserService {
       ) as _i6.Future<String?>);
 
   @override
+  _i6.Future<String?> updateUser(_i9.AppUser? user) => (super.noSuchMethod(
+        Invocation.method(
+          #updateUser,
+          [user],
+        ),
+        returnValue: _i6.Future<String?>.value(),
+        returnValueForMissingStub: _i6.Future<String?>.value(),
+      ) as _i6.Future<String?>);
+
+  @override
   _i6.Future<_i9.AppUser?> fetchUser() => (super.noSuchMethod(
         Invocation.method(
           #fetchUser,
@@ -830,6 +878,16 @@ class MockUserService extends _i1.Mock implements _i10.UserService {
         returnValue: _i6.Future<_i9.AppUser?>.value(),
         returnValueForMissingStub: _i6.Future<_i9.AppUser?>.value(),
       ) as _i6.Future<_i9.AppUser?>);
+
+  @override
+  _i6.Future<List<_i9.AppUser?>?> fetchVideoIdUser() => (super.noSuchMethod(
+        Invocation.method(
+          #fetchVideoIdUser,
+          [],
+        ),
+        returnValue: _i6.Future<List<_i9.AppUser?>?>.value(),
+        returnValueForMissingStub: _i6.Future<List<_i9.AppUser?>?>.value(),
+      ) as _i6.Future<List<_i9.AppUser?>?>);
 }
 
 /// A class which mocks [DatabaseService].
@@ -920,4 +978,64 @@ class MockDatabaseService extends _i1.Mock implements _i11.DatabaseService {
         ),
         returnValueForMissingStub: null,
       );
+}
+
+/// A class which mocks [VideosdkService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockVideosdkService extends _i1.Mock implements _i13.VideosdkService {
+  @override
+  _i2.Logger get log => (super.noSuchMethod(
+        Invocation.getter(#log),
+        returnValue: _FakeLogger_0(
+          this,
+          Invocation.getter(#log),
+        ),
+        returnValueForMissingStub: _FakeLogger_0(
+          this,
+          Invocation.getter(#log),
+        ),
+      ) as _i2.Logger);
+
+  @override
+  String get token => (super.noSuchMethod(
+        Invocation.getter(#token),
+        returnValue: _i4.dummyValue<String>(
+          this,
+          Invocation.getter(#token),
+        ),
+        returnValueForMissingStub: _i4.dummyValue<String>(
+          this,
+          Invocation.getter(#token),
+        ),
+      ) as String);
+
+  @override
+  set token(String? _token) => super.noSuchMethod(
+        Invocation.setter(
+          #token,
+          _token,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i6.Future<String?> createMeeting() => (super.noSuchMethod(
+        Invocation.method(
+          #createMeeting,
+          [],
+        ),
+        returnValue: _i6.Future<String?>.value(),
+        returnValueForMissingStub: _i6.Future<String?>.value(),
+      ) as _i6.Future<String?>);
+
+  @override
+  bool validateMeetingId(dynamic meetingId) => (super.noSuchMethod(
+        Invocation.method(
+          #validateMeetingId,
+          [meetingId],
+        ),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
 }

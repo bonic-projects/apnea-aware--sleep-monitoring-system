@@ -18,9 +18,6 @@ class RegisterViewModel extends FormViewModel {
   final _navigationService = locator<NavigationService>();
   final _snackBarService = locator<SnackbarService>();
 
-  // late String _userRole;
-  // String get userRole => _userRole;
-
   void onModelReady() {
     // _userRole = userRole;
   }
@@ -62,8 +59,12 @@ class RegisterViewModel extends FormViewModel {
           regTime: DateTime.now(),
         ));
         if (error == null) {
-          _userService.fetchUser();
-          _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
+          await _userService.fetchUser();
+          if (_userService.user!.userRole == "Patient") {
+            _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
+          } else {
+            _navigationService.pushNamedAndRemoveUntil(Routes.doctorView);
+          }
         } else {
           log.i("Firebase error");
 

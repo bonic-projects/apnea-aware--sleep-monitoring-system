@@ -7,6 +7,9 @@ class AppUser {
 
   final DateTime regTime;
 
+  final String? videoId;
+  final bool? isVideoOn;
+
   AppUser({
     required this.id,
     required this.fullName,
@@ -14,6 +17,8 @@ class AppUser {
     required this.email,
     required this.userRole,
     required this.regTime,
+    this.videoId,
+    this.isVideoOn,
   });
 
   AppUser.fromMap(Map<String, dynamic> data)
@@ -22,6 +27,8 @@ class AppUser {
         photoUrl = data['photoUrl'] ?? "nil",
         email = data['email'] ?? "nil",
         userRole = data['userRole'] ?? "patient",
+        isVideoOn = data[false],
+        videoId = data['videoId'],
         regTime =
             data['regTime'] != null ? data['regTime'].toDate() : DateTime.now();
 
@@ -33,6 +40,7 @@ class AppUser {
       'keyword': keyword,
       'email': email,
       'userRole': userRole,
+      'isVideoOn': isVideoOn,
     };
     // if (imgString != null) map['imgString'] = imgString!;
     return map;

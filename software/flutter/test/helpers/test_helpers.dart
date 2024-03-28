@@ -5,6 +5,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:apnea_aware/services/firestore_service.dart';
 import 'package:apnea_aware/services/user_service.dart';
 import 'package:apnea_aware/services/database_service.dart';
+import 'package:apnea_aware/services/videosdk_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -16,6 +17,7 @@ import 'test_helpers.mocks.dart';
   MockSpec<FirestoreService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<UserService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<DatabaseService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<VideosdkService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -25,6 +27,7 @@ void registerServices() {
   getAndRegisterFirestoreService();
   getAndRegisterUserService();
   getAndRegisterDatabaseService();
+  getAndRegisterVideosdkService();
 // @stacked-mock-register
 }
 
@@ -96,6 +99,13 @@ MockDatabaseService getAndRegisterDatabaseService() {
   _removeRegistrationIfExists<DatabaseService>();
   final service = MockDatabaseService();
   locator.registerSingleton<DatabaseService>(service);
+  return service;
+}
+
+MockVideosdkService getAndRegisterVideosdkService() {
+  _removeRegistrationIfExists<VideosdkService>();
+  final service = MockVideosdkService();
+  locator.registerSingleton<VideosdkService>(service);
   return service;
 }
 // @stacked-mock-create

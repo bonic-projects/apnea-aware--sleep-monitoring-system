@@ -56,8 +56,8 @@ class RegisterView extends StackedView<RegisterViewModel> with $RegisterView {
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Image.asset(
-                  'assets/images/apnaAware.png',
-                  height: 150,
+                  'assets/images/apneaaware.png',
+                  height: 400,
                 ),
               ),
               // const Text(

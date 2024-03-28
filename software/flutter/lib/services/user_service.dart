@@ -19,6 +19,10 @@ class UserService {
     _authenticationService.logout();
   }
 
+  void deleteVideoId() async {
+    await _firestoreService.deleteVideoId();
+  }
+
   Future<String?> createUpdateUser(AppUser user) async {
     bool value = await _firestoreService.createUser(
       user: user,
@@ -31,15 +35,37 @@ class UserService {
     }
   }
 
+  Future<String?> updateUser(AppUser user) async {
+    await _firestoreService.updateVideoId(videoId: user.videoId.toString());
+    return null;
+  }
+
   Future<AppUser?> fetchUser() async {
     final uid = _authenticationService.currentUser?.uid;
     if (uid != null) {
       AppUser? user = await _firestoreService.getUser(userId: uid);
       if (user != null) {
         _user = user;
+        _user = user;
       }
     }
     return _user;
+  }
+
+  List<AppUser?> get idUser => _idUser;
+  late List<AppUser?> _idUser;
+
+  Future<List<AppUser?>?> fetchVideoIdUser() async {
+    try {
+      List<AppUser>? idUser = await _firestoreService.getUsersWithVideoId();
+      if (idUser.isNotEmpty) {
+        _idUser = idUser.toList();
+      }
+      return _idUser;
+    } catch (e) {
+      log.e("Error fetching video ID user: $e");
+      return null;
+    }
   }
 
   ///keywords list creating function

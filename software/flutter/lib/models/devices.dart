@@ -4,18 +4,36 @@ class DeviceReading {
   double heartrate;
   double spo2;
   double acceleration;
+  double gyroX;
+  double gyroY;
+  double gyroZ;
+  double acclX;
+  double acclY;
+  double acclZ;
 
   DeviceReading({
     required this.heartrate,
     required this.spo2,
     required this.acceleration,
+    required this.gyroX,
+    required this.gyroY,
+    required this.gyroZ,
+    required this.acclX,
+    required this.acclY,
+    required this.acclZ,
   });
 
   factory DeviceReading.fromMap(Map data) {
     return DeviceReading(
-      heartrate: data['heartrate'],
-      spo2: data['spo2'],
-      acceleration: data['acceleration'],
+      heartrate: data['heartrate'] ?? 0,
+      spo2: data['spo2'] ?? 0,
+      acceleration: data['acceleration'] ?? 0,
+      gyroX: data['gyroX'] ?? 0,
+      gyroY: data['gyroY'] ?? 0,
+      gyroZ: data['gyroZ'] ?? 0,
+      acclX: data['acclX'] ?? 0,
+      acclY: data['acclY'] ?? 0,
+      acclZ: data['acclZ'] ?? 0,
     );
   }
 }

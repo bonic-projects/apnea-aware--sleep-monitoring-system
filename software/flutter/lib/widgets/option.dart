@@ -33,7 +33,7 @@ class Option extends StatelessWidget {
                       right: 0,
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 24.0),
-                        child: Lottie.asset(file),
+                        child: Lottie.asset(file, fit: BoxFit.cover),
                       )),
                   Positioned(
                     bottom: 0,

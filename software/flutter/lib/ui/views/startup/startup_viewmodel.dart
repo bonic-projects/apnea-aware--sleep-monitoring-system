@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:apnea_aware/app/app.logger.dart';
 import 'package:apnea_aware/services/database_service.dart';
 import 'package:apnea_aware/services/user_service.dart';

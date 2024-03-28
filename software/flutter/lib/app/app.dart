@@ -1,5 +1,6 @@
 import 'package:apnea_aware/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:apnea_aware/ui/dialogs/info_alert/info_alert_dialog.dart';
+
 import 'package:apnea_aware/ui/views/home/home_view.dart';
 import 'package:apnea_aware/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -13,9 +14,16 @@ import 'package:apnea_aware/services/firestore_service.dart';
 import 'package:apnea_aware/services/user_service.dart';
 import 'package:apnea_aware/ui/views/heart_rate/heart_rate_view.dart';
 
-import 'package:apnea_aware/ui/views/accerelator/accerelator_view.dart';
 import 'package:apnea_aware/services/database_service.dart';
 import 'package:apnea_aware/ui/views/detailed/detailed_view.dart';
+
+import 'package:apnea_aware/ui/views/movement/movement_view.dart';
+import 'package:apnea_aware/ui/views/doctor/doctor_view.dart';
+import 'package:apnea_aware/ui/views/patient/patient_view.dart';
+import 'package:apnea_aware/services/videosdk_service.dart';
+import 'package:apnea_aware/ui/views/videocall/videocall_view.dart';
+
+import 'package:apnea_aware/ui/views/alert/alert_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -28,8 +36,14 @@ import 'package:apnea_aware/ui/views/detailed/detailed_view.dart';
     MaterialRoute(page: LoginView),
     MaterialRoute(page: HeartRateView),
 
-    MaterialRoute(page: AccerelatorView),
     MaterialRoute(page: DetailedView),
+
+    MaterialRoute(page: MovementView),
+    MaterialRoute(page: DoctorView),
+    MaterialRoute(page: PatientView),
+    MaterialRoute(page: VideocallView),
+
+    MaterialRoute(page: AlertView),
 // @stacked-route
   ],
   dependencies: [
@@ -42,6 +56,7 @@ import 'package:apnea_aware/ui/views/detailed/detailed_view.dart';
     LazySingleton(classType: UserService),
 
     LazySingleton(classType: DatabaseService),
+    LazySingleton(classType: VideosdkService),
 // @stacked-service
   ],
   bottomsheets: [

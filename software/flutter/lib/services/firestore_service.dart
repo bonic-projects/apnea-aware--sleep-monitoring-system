@@ -24,6 +24,36 @@ class FirestoreService {
     }
   }
 
+  Future<bool> updateVideoId({required String videoId}) async {
+    log.i('Video Id update');
+    try {
+      final userDocument =
+          _usersCollection.doc(_authenticationService.currentUser!.uid);
+      await userDocument.update({"videoId": videoId});
+      await userDocument.update(({"isVideoOn": true}));
+      // log.v('UserCreated at ${userDocument.path}');
+      return true;
+    } catch (error) {
+      log.e("Error $error");
+      return false;
+    }
+  }
+
+  Future<bool> deleteVideoId() async {
+    log.i('Deleting Video Id');
+    try {
+      final userDocument = _usersCollection
+          .doc(_authenticationService.currentUser!.uid); // Get user document
+      await userDocument.update(({"isVideoOn": false}));
+      await userDocument.update({"videoId": FieldValue.delete()});
+      log.i('Video Id deleted successfully');
+      return true;
+    } catch (error) {
+      log.e("Error deleting Video Id: $error");
+      return false;
+    }
+  }
+
   Future<AppUser?> getUser({required String userId}) async {
     log.i('userId:$userId');
 
@@ -44,18 +74,41 @@ class FirestoreService {
     }
   }
 
-  Future<List<AppUser>> searchUsers(String keyword) async {
-    log.i("searching for $keyword");
-    final query = _usersCollection
-        .where('keyword', arrayContains: keyword.toLowerCase())
-        .limit(5);
+  Future<List<AppUser>> getUsersWithVideoId() async {
+    log.i('Fetching users with Video Id');
+    try {
+      final querySnapshot =
+          await _usersCollection.where('isVideoOn', isEqualTo: true).get();
+      log.i("Video id users found: ${querySnapshot.size}");
 
-    final snapshot = await query.get();
+      final List<AppUser> usersList = [];
+      querySnapshot.docs.forEach((doc) {
+        log.i("print");
+        final userData = doc.data() as Map<String, dynamic>;
+        final user = AppUser.fromMap(userData);
+        usersList.add(user);
+        log.i(usersList.length);
+      });
 
-    return snapshot.docs
-        .map((doc) => AppUser.fromMap(doc.data() as Map<String, dynamic>))
-        .toList();
+      return usersList;
+    } catch (error) {
+      log.e("Error fetching users with Video Id: $error");
+      return [];
+    }
   }
+
+  // Future<List<AppUser>> searchUsers(String keyword) async {
+  //   log.i("searching for $keyword");
+  //   final query = _usersCollection
+  //       .where('keyword', arrayContains: keyword.toLowerCase())
+  //       .limit(5);
+
+  //   final snapshot = await query.get();
+
+  //   return snapshot.docs
+  //       .map((doc) => AppUser.fromMap(doc.data() as Map<String, dynamic>))
+  //       .toList();
+  // }
 
   //
 

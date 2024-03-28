@@ -17,24 +17,36 @@ class HomeView extends StackedView<HomeViewModel> {
       appBar: AppBar(
         title: const Text('Apnea Aware'),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: viewModel.logout,
+              icon: const Icon(Icons.logout_outlined))
+        ],
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Container(
         padding: const EdgeInsets.all(16),
-        child: GridView.count(crossAxisCount: 2, children: [
-          Option(
-              name: 'Heart Rate',
-              onTap: viewModel.heartRateView,
-              file: 'assets/lottie/heartrate.json'),
-          Option(
-              name: 'Detailed View',
-              onTap: viewModel.detailed,
-              file: 'assets/lottie/sp02.json'),
-          Option(
-              name: 'Acceleration',
-              onTap: viewModel.accerelatorView,
-              file: 'assets/lottie/accrelator.json'),
-        ]),
+        child: GridView.count(
+          crossAxisCount: 2,
+          children: [
+            Option(
+                name: 'Heart Rate',
+                onTap: viewModel.heartRateView,
+                file: 'assets/lottie/heartrate.json'),
+            Option(
+                name: 'Detailed View',
+                onTap: viewModel.detailed,
+                file: 'assets/lottie/sp02.json'),
+            Option(
+                name: 'Movement',
+                onTap: viewModel.accerelatorView,
+                file: 'assets/lottie/accrelator.json'),
+            Option(
+                name: 'Video Chat',
+                onTap: viewModel.patientView,
+                file: 'assets/lottie/videocall.json'),
+          ],
+        ),
       ),
     );
   }

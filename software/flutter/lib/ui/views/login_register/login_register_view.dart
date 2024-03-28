@@ -16,25 +16,27 @@ class LoginRegisterView extends StackedView<LoginRegisterViewModel> {
   ) {
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10, right: 15),
-                child: Image.asset(
-                  'assets/images/apnaAware.png',
-                  height: 400,
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 15),
+                  child: Image.asset(
+                    'assets/images/apneaaware.png',
+                    height: 500,
+                  ),
                 ),
-              ),
-              LoginRegisterWidget(
-                onLogin: viewModel.openLoginView,
-                onRegister: viewModel.openRegisterView,
-                loginText: "Existing Doctor",
-                registerText: "Doctor registration",
-              ),
-            ],
+                LoginRegisterWidget(
+                  onLogin: viewModel.openLoginView,
+                  onRegister: viewModel.openRegisterView,
+                  loginText: "Existing Doctor",
+                  registerText: "Doctor registration",
+                ),
+              ],
+            ),
           ),
         ));
   }
