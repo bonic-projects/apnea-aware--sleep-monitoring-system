@@ -78,7 +78,7 @@ class DetailedView extends StackedView<DetailedViewModel> {
                                     style: appText(
                                         size: 30,
                                         color: waveColor,
-                                        weight: FontWeight.w500)),
+                                        weight: FontWeight.w500),),
                               ],
                             ),
                             textAlign: TextAlign.start,

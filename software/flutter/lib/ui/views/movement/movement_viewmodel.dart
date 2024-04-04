@@ -50,7 +50,7 @@ class MovementViewModel extends ReactiveViewModel {
     if (node != null) {
       gyroxCount++;
       gyroXSpots.add(FlSpot(gyroxCount.toDouble(), node!.gyroX));
-      if (gyroxCount > 15) {
+      if (gyroxCount > 13) {
         gyroXSpots.removeAt(0);
         notifyListeners();
         _timer.cancel();
@@ -62,7 +62,7 @@ class MovementViewModel extends ReactiveViewModel {
     if (node != null) {
       gyroyCount++;
       gyroYSpots.add(FlSpot(gyroyCount.toDouble(), node!.gyroY));
-      if (gyroyCount > 15) {
+      if (gyroyCount > 13) {
         gyroYSpots.removeAt(0);
         notifyListeners();
         _timer.cancel();
@@ -74,7 +74,7 @@ class MovementViewModel extends ReactiveViewModel {
     if (node != null) {
       gyrozCount++;
       gyroZSpots.add(FlSpot(gyrozCount.toDouble(), node!.gyroZ));
-      if (gyrozCount > 15) {
+      if (gyrozCount > 13) {
         gyroZSpots.removeAt(0);
         notifyListeners();
         _timer.cancel();
@@ -87,7 +87,7 @@ class MovementViewModel extends ReactiveViewModel {
       accelerationxCount++;
       accelerationXSpots
           .add(FlSpot(accelerationxCount.toDouble(), node!.acclX));
-      if (accelerationxCount > 15) {
+      if (accelerationxCount > 13) {
         accelerationXSpots.removeAt(0);
         notifyListeners();
         _timer.cancel();
@@ -100,7 +100,7 @@ class MovementViewModel extends ReactiveViewModel {
       accelerationyCount++;
       accelerationYSpots
           .add(FlSpot(accelerationyCount.toDouble(), node!.acclY));
-      if (accelerationyCount > 15) {
+      if (accelerationyCount > 13) {
         accelerationYSpots.removeAt(0);
         notifyListeners();
         _timer.cancel();
@@ -113,7 +113,7 @@ class MovementViewModel extends ReactiveViewModel {
       accelerationzCount++;
       accelerationZSpots
           .add(FlSpot(accelerationzCount.toDouble(), node!.acclZ));
-      if (accelerationzCount > 15) {
+      if (accelerationzCount > 13) {
         accelerationZSpots.removeAt(0);
         notifyListeners();
         _timer.cancel();

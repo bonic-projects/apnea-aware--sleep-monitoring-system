@@ -17,7 +17,7 @@ class AlertView extends StackedView<AlertViewModel> {
       content: const Text(
         'Are you sure you want to stop video calling?',
       ),
-      actions: <Widget>[
+      actions:[
         TextButton(
             style: TextButton.styleFrom(
               textStyle: Theme.of(context).textTheme.labelLarge,

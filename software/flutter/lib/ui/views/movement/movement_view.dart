@@ -1,5 +1,4 @@
-import 'package:apnea_aware/widgets/Movementchart.dart';
-
+import 'package:apnea_aware/widgets/custom_line_chart.dart';
 import 'package:apnea_aware/widgets/reading_card.dart';
 
 import 'package:flutter/material.dart';
@@ -44,33 +43,36 @@ class MovementView extends StackedView<MovementViewModel> {
                   text: " GyroX ",
                   value: viewModel.node!.gyroX,
                 ),
-                ReadingCard(text: "GyroY", value: viewModel.node!.gyroY),
-                ReadingCard(text: "GyroZ", value: viewModel.node!.gyroZ),
+                ReadingCard(
+                  text: "GyroY",
+                  value: viewModel.node!.gyroY,
+                ),
+                ReadingCard(
+                  text: "GyroZ",
+                  value: viewModel.node!.gyroZ,
+                ),
               ],
             ),
+            const SizedBox(
+              height: 50,
+            ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
-                  child: MovementChart(
-                    text: 'Acceleration',
+                  child: CustomLineChart(
                     x: viewModel.gyroXSpots,
                     y: viewModel.gyroYSpots,
                     z: viewModel.gyroZSpots,
                   ),
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
                 Expanded(
-                  child: MovementChart(
-                    text: 'Gyro',
+                  child: CustomLineChart(
                     x: viewModel.accelerationXSpots,
                     y: viewModel.accelerationYSpots,
                     z: viewModel.accelerationZSpots,
                   ),
-                ),
+                )
               ],
             )
           ],
