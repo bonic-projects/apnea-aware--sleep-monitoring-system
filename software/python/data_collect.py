@@ -14,7 +14,7 @@ ref = db.reference("/devices/lSfWVwRHbXeU3bitqGDy95fGyG12/reading/")
 
 # Define the CSV file name and header row
 csv_file = 'data.csv'
-header = ['avgBpm', 'status']
+header = ['beatAvg', 'sp02Avg', 'dB', 'status']
 
 conditionIn = 'normal' #normal, hypopnea, apnea
 # Listen to the database changes
@@ -24,7 +24,7 @@ def on_data_change(event):
     data = event.data
     # if(data.get('condition')!=None):
     #     conditionIn = data.get('condition')
-    row = [data.get('avgBpm'), conditionIn]
+    row = [data.get('beatAvg'), data.get('sp02Avg'), data.get('dB'), conditionIn]
     if data.get('avgBpm') != 0: # and data.get('ec') != 0: #and list(data.values()) != last_row:
         with open(csv_file, mode='a', newline='') as file:
             writer = csv.writer(file)
