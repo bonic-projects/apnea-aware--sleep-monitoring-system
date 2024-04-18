@@ -30,26 +30,25 @@ class CustomChart extends StatelessWidget {
         bottomTitles: AxisTitles(
           axisNameWidget: Text(
             horizontalaxisTileText,
-            style: GoogleFonts.sora().copyWith(
-                fontWeight: FontWeight.bold, fontSize: 20, color: heartColor),
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           sideTitles: const SideTitles(
             showTitles: true,
-            reservedSize: 50,
+            // reservedSize: 50,
             interval: 1,
           ),
         ),
         leftTitles: AxisTitles(
           axisNameWidget: Text(
             verticalaxisTileText,
-            style: GoogleFonts.sora().copyWith(
-                fontWeight: FontWeight.bold, fontSize: 20, color: heartColor),
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           sideTitles: const SideTitles(
               showTitles: true,
-              interval: 20,
+              // interval: 20,
               // getTitlesWidget: leftTitleWidgets,
-              reservedSize: 42),
+              reservedSize: 42,
+          ),
         ),
       ),
       gridData: FlGridData(
@@ -68,10 +67,10 @@ class CustomChart extends StatelessWidget {
           );
         },
       ),
-      borderData: FlBorderData(
-        show: true,
-        border: Border.all(color: const Color(0xff37434d), width: 2),
-      ),
+      // borderData: FlBorderData(
+      //   show: true,
+      //   border: Border.all(color: const Color(0xff37434d), width: 2),
+      // ),
       lineBarsData: [
         LineChartBarData(
           show: spots.isNotEmpty,

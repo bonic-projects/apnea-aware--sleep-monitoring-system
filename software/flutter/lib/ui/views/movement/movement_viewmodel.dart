@@ -21,12 +21,12 @@ class MovementViewModel extends ReactiveViewModel {
   int accelerationyCount = 0;
   int accelerationzCount = 0;
 
-  List<FlSpot> gyroXSpots = [];
-  List<FlSpot> gyroYSpots = [];
-  List<FlSpot> gyroZSpots = [];
-  List<FlSpot> accelerationXSpots = [];
-  List<FlSpot> accelerationYSpots = [];
-  List<FlSpot> accelerationZSpots = [];
+  List<FlSpot> gyroXSpots = [const FlSpot(0, 0)];
+  List<FlSpot> gyroYSpots = [const FlSpot(0, 0)];
+  List<FlSpot> gyroZSpots = [const FlSpot(0, 0)];
+  List<FlSpot> accelerationXSpots = [const FlSpot(0, 0)];
+  List<FlSpot> accelerationYSpots = [const FlSpot(0, 0)];
+  List<FlSpot> accelerationZSpots = [const FlSpot(0, 0)];
 
   @override
   List<ListenableServiceMixin> get listenableServices => [_databaseService];

@@ -27,20 +27,23 @@ class HomeView extends StackedView<HomeViewModel> {
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(40),
         child: GridView.count(
+          padding: const EdgeInsets.all(40),
           crossAxisCount: 2,
+          crossAxisSpacing: 40,
+          mainAxisSpacing: 40,
           children: [
             Option(
-                name: 'Heart Rate',
+                name: 'Prediction',
                 onTap: viewModel.heartRateView,
                 file: 'assets/lottie/heartrate.json'),
             Option(
-                name: 'Detailed View',
+                name: 'BPM & SPO2',
                 onTap: viewModel.detailed,
                 file: 'assets/lottie/sp02.json'),
             Option(
-                name: 'Movement',
+                name: 'Movement Graph',
                 onTap: viewModel.accerelatorView,
                 file: 'assets/lottie/accrelator.json'),
             Option(

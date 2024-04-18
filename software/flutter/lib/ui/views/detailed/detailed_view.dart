@@ -26,19 +26,25 @@ class DetailedView extends StackedView<DetailedViewModel> {
       children: [
         SizedBox(
           height: 400,
-          child: CustomChart(
-              horizontalaxisTileText: 'Time',
-              verticalaxisTileText: 'Blood Pressure',
-              gradientColors: gradientColors,
-              spots: viewModel.heartRateSpots),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomChart(
+                horizontalaxisTileText: 'Time',
+                verticalaxisTileText: 'Blood Pressure',
+                gradientColors: gradientColors,
+                spots: viewModel.heartRateSpots),
+          ),
         ),
         SizedBox(
           height: 400,
-          child: CustomChart(
-              horizontalaxisTileText: 'Time',
-              verticalaxisTileText: 'Spo2',
-              gradientColors: gradientColors,
-              spots: viewModel.spo2Spots),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomChart(
+                horizontalaxisTileText: 'Time',
+                verticalaxisTileText: 'SpO2',
+                gradientColors: gradientColors,
+                spots: viewModel.spo2Spots),
+          ),
         ),
         Card(
             margin:
@@ -61,7 +67,7 @@ class DetailedView extends StackedView<DetailedViewModel> {
                         TextSpan(
                           children: [
                             TextSpan(
-                                text: "${viewModel.node?.avgBpm}",
+                                text: "${viewModel.node?.heartrate}",
                                 style: appText(
                                     size: 23,
                                     color: heartColor,
@@ -85,7 +91,7 @@ class DetailedView extends StackedView<DetailedViewModel> {
                       const Spacer(),
                       Lottie.asset(
                         "assets/lottie/heartrate.json",
-                        height: MediaQuery.of(context).size.height * 0.235,
+                        height: MediaQuery.of(context).size.width * 0.235,
                       )
                     ],
                   ),
@@ -111,22 +117,23 @@ class DetailedView extends StackedView<DetailedViewModel> {
                             TextSpan(
                                 text: '112',
                                 style: appText(
-                                    size: 23,
                                     color: heartColor,
                                     weight: FontWeight.w500)),
-                            const TextSpan(
-                              text: ' BPM',
-                            ),
                             TextSpan(
-                              text: '\nMAX',
+                              text: 'BPM',
                               style: appText(
                                   color: waveColor, weight: FontWeight.w500),
                             ),
+                            TextSpan(
+                                text: '\nMIN',
+                                style: appText(
+                                    size: 23,
+                                    color: waveColor,
+                                    weight: FontWeight.w500)),
                           ],
                         ),
                         textAlign: TextAlign.center,
-                      ),
-                      const Spacer(),
+                      ),                      const Spacer(),
                       Text.rich(
                         TextSpan(
                           children: [
@@ -143,7 +150,7 @@ class DetailedView extends StackedView<DetailedViewModel> {
                             TextSpan(
                                 text: '\nMIN',
                                 style: appText(
-                                    size: 30,
+                                    size: 23,
                                     color: waveColor,
                                     weight: FontWeight.w500)),
                           ],

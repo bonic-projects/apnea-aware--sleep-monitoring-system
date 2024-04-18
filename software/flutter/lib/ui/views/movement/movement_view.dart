@@ -1,7 +1,9 @@
 import 'package:apnea_aware/widgets/custom_line_chart.dart';
 import 'package:apnea_aware/widgets/reading_card.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:stacked/stacked.dart';
 
@@ -56,25 +58,15 @@ class MovementView extends StackedView<MovementViewModel> {
             const SizedBox(
               height: 50,
             ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: CustomLineChart(
-                    x: viewModel.gyroXSpots,
-                    y: viewModel.gyroYSpots,
-                    z: viewModel.gyroZSpots,
-                  ),
-                ),
-                Expanded(
-                  child: CustomLineChart(
-                    x: viewModel.accelerationXSpots,
-                    y: viewModel.accelerationYSpots,
-                    z: viewModel.accelerationZSpots,
-                  ),  
-                )
-              ],
-            )
+
+            Container(
+              width: MediaQuery.of(context).size.width  * 0.9,
+              child: CustomLineChart(
+                x: viewModel.gyroXSpots,
+                y: viewModel.gyroYSpots,
+                z: viewModel.gyroZSpots,
+              ),
+            ),
           ],
         ),
       ),

@@ -62,7 +62,7 @@ class HeartRateView extends StackedView<HeartRateViewModel> {
                 ),
                 verticalSpaceLarge,
                 Text(
-                  'Place your Finger Print on the device',
+                  viewModel.node!=null && viewModel.node!.heartrate  > 40 ? "Reading BPM & SPO2" :  'Please wear your band',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.sora()
                       .copyWith(color: Colors.white, fontSize: 36),
@@ -70,10 +70,109 @@ class HeartRateView extends StackedView<HeartRateViewModel> {
                 SiriWaveform.ios9(
                   options: const IOS9SiriWaveformOptions(
                     showSupportBar: true,
-                    height: 300,
+                    height: 200,
                     width: 250,
                   ),
-                )
+                ),
+                Text(
+                  "${viewModel.node?.dB ?? 0} dB",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.sora()
+                      .copyWith(color: Colors.white, fontSize: 36),
+                ),
+                SizedBox(height: 100),
+                if(viewModel.predictedClass!=null)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            viewModel.predictedClass!.toUpperCase(),
+                            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 30),
+                          ),
+                          if (viewModel.predictions != null && viewModel.predictions!.isNotEmpty) ...[
+                            const SizedBox(height: 10),
+                            ...viewModel.predictions!.map((prediction) => Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Status: ${prediction['status']}'),
+                                Text('Probability: ${prediction['probability']}'),
+                                const Divider(), // Add a divider between predictions
+                              ],
+                            )),
+                          ] else
+                            const Center(
+                              child: Text('No predictions available'),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          TextField(
+                            controller: TextEditingController(text: viewModel.serverIP),
+                            decoration: const InputDecoration(
+                              labelText: 'Enter Flask Server IP Address',
+                            ),
+                            onChanged: (value) {
+                              viewModel.setServerIP(value); // Set IP in viewmodel
+                            },
+                          ),
+                          const SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed: () {
+                              viewModel.getPredictions().then((predictions) {
+                                // Handle predictions
+                                // print(predictions);
+                              }).catchError((error) {
+                                // Handle errors
+                                // print(error);
+                              });
+                            },
+                            child: const Text('Get Predictions'),
+                          ),
+
+                        ],
+                      ),
+                    ),
+                  ),
+
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('Automatic mode: '),
+                          Switch(
+                            value: viewModel.switchValue,
+                            onChanged: (newValue) {
+                              viewModel.switchValueChanged(newValue);
+
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
               ],
             ),
           ),

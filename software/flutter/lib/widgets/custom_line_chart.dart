@@ -16,11 +16,12 @@ class CustomLineChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 500,
-      child: LineChart(LineChartData(
+      child: LineChart(
+          LineChartData(
         minX: 0,
         maxX: 14,
-        maxY: 4,
-        minY: 0,
+        maxY: 10,
+        minY: -10,
         lineBarsData: [
           LineChartBarData(
               isCurved: true,

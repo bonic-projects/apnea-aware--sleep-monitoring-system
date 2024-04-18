@@ -20,7 +20,7 @@ class ReadingCard extends StatelessWidget {
         color: scaffoldColor,
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(4.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -29,15 +29,15 @@ class ReadingCard extends StatelessWidget {
                     style: appText(
                       color: heartColor,
                       weight: FontWeight.w700,
-                    ).copyWith(fontSize: 25)),
+                    ).copyWith(fontSize: 15)),
                 const Divider(
-                  thickness: 5,
+                  thickness: 2,
                 ),
                 Text(
                   value.toString(),
                   style: appText(color: Colors.white, weight: FontWeight.w700)
                       .copyWith(
-                    fontSize: 50,
+                    fontSize: 18,
                   ),
                 )
               ],
