@@ -5,7 +5,7 @@ import 'package:apnea_aware/models/devices.dart';
 
 import '../app/app.logger.dart';
 
-const dbCode = "s71vpP777FaGUgxmjmlqkGx8D283";
+const dbCode = "plX7kE7mAQQ5YgcKRsjp5b6t8Ac2";
 
 class DatabaseService with ListenableServiceMixin {
   final log = getLogger('RealTimeDB_Service');
@@ -16,21 +16,22 @@ class DatabaseService with ListenableServiceMixin {
   DeviceReading? get node => _node;
 
   Future<DeviceData?> getDeviceData() async {
-    DatabaseReference dataRef = _db.ref('/devices/$dbCode/signal');
+    DatabaseReference dataRef = _db.ref('/devices/$dbCode/reading');
     final value = await dataRef.once();
     if (value.snapshot.exists) {
+      log.i("New data");
       return DeviceData.fromMap(value.snapshot.value as Map);
     }
     return null;
   }
 
   void setDeviceData(DeviceData data) {
-    DatabaseReference dataRef = _db.ref('/devices/$dbCode/signal');
+    DatabaseReference dataRef = _db.ref('/devices/$dbCode/reading');
     dataRef.update(data.toJson());
   }
 
   void setupNodeListening() {
-    DatabaseReference starCountRef = _db.ref('/devices/$dbCode/signal');
+    DatabaseReference starCountRef = _db.ref('/devices/$dbCode/reading');
     log.i("R ${starCountRef.key}");
     log.i("CHECKING..");
     try {

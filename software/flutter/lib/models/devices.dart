@@ -2,6 +2,8 @@
 /// Device Sensor Reading model
 class DeviceReading {
   double heartrate;
+  double avgBpm;
+
   double spo2;
   double acceleration;
   double gyroX;
@@ -10,9 +12,11 @@ class DeviceReading {
   double acclX;
   double acclY;
   double acclZ;
+  DateTime lastSeen;
 
   DeviceReading({
     required this.heartrate,
+    required this.avgBpm,
     required this.spo2,
     required this.acceleration,
     required this.gyroX,
@@ -21,11 +25,13 @@ class DeviceReading {
     required this.acclX,
     required this.acclY,
     required this.acclZ,
+    required this.lastSeen,
   });
 
   factory DeviceReading.fromMap(Map data) {
     return DeviceReading(
-      heartrate: data['heartrate'] ?? 0,
+      heartrate: data['bpm'] ?? 0,
+      avgBpm: data['avgBpm']??0,
       spo2: data['spo2'] ?? 0,
       acceleration: data['acceleration'] ?? 0,
       gyroX: data['gyroX'] ?? 0,
@@ -34,6 +40,7 @@ class DeviceReading {
       acclX: data['acclX'] ?? 0,
       acclY: data['acclY'] ?? 0,
       acclZ: data['acclZ'] ?? 0,
+      lastSeen: DateTime.fromMillisecondsSinceEpoch(data['ts']),
     );
   }
 }

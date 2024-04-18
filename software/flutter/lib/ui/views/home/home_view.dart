@@ -1,3 +1,4 @@
+import 'package:apnea_aware/ui/smart_widgets/online_status.dart';
 import 'package:apnea_aware/widgets/option.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -18,6 +19,7 @@ class HomeView extends StackedView<HomeViewModel> {
         title: const Text('Apnea Aware'),
         centerTitle: true,
         actions: [
+          const IsOnlineWidget(),
           IconButton(
               onPressed: viewModel.logout,
               icon: const Icon(Icons.logout_outlined))

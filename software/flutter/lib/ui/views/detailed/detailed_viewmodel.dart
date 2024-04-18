@@ -14,6 +14,8 @@ class DetailedViewModel extends ReactiveViewModel {
   final log = getLogger('DetailedViewModel');
 
   DeviceReading? get node => _databaseService.node;
+  @override
+  List<ListenableServiceMixin> get listenableServices => [_databaseService];
 
   late Timer _timer;
   int heartRateCount = 0;
@@ -39,7 +41,7 @@ class DetailedViewModel extends ReactiveViewModel {
   void _updateHeartRateSpots() {
     if (node != null) {
       heartRateCount++;
-      FlSpot s = FlSpot(heartRateCount.toDouble(), node!.heartrate);
+      FlSpot s = FlSpot(heartRateCount.toDouble(), node?.heartrate ?? 0);
       heartRateSpots.add(s);
       if (heartRateCount > 50) {
         heartRateSpots.removeAt(0);

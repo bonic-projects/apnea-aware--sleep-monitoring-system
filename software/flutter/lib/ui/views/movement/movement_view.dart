@@ -71,7 +71,7 @@ class MovementView extends StackedView<MovementViewModel> {
                     x: viewModel.accelerationXSpots,
                     y: viewModel.accelerationYSpots,
                     z: viewModel.accelerationZSpots,
-                  ),
+                  ),  
                 )
               ],
             )
