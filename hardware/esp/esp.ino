@@ -54,12 +54,14 @@ uint32_t irBuffer[100];   //infrared LED sensor data
 uint32_t redBuffer[100];  //red LED sensor data
 
 #define REPORTING_PERIOD_MS 1000  // frequency of updates sent to blynk app in ms
+#define DIFFERENCE_PERIOD_MS 5000  // frequency of updates sent to blynk app in ms
 
 // char auth[] = "";  // You should get Auth Token in the Blynk App.
 // char ssid[] = "";  // Your WiFi credentials.
 // char pass[] = "";
 
 uint32_t tsLastReport = 0;  //stores the time the last update was sent to the blynk app
+uint32_t diffLastReport = 0;  //stores the time the last update was sent to the blynk app
 
 int32_t bufferLength;   //data length
 int32_t spo2;           //SPO2 value
@@ -75,6 +77,8 @@ long lastBeat = 0;  //Time at which the last beat occurred
 float beatsPerMinute;          //stores the BPM as per custom algorithm
 int beatAvg = 0, sp02Avg = 0;  //stores the average BPM and SPO2
 float ledBlinkFreq;      //stores the frequency to blink the pulseLED
+int lastBeatAvg = 0, lastSp02Avg = 0;  //stores the average BPM and SPO2
+int beatAvgDiff = 0, sp02AvgDiff = 0;  //stores the average BPM and SPO2
 
 
 #include <Adafruit_MPU6050.h>
@@ -257,13 +261,15 @@ void updateData() {
   FirebaseJson json;
   json.set("beatAvg", beatAvg);
   json.set("sp02Avg", sp02Avg);
-  json.set("accX",accX);
-  json.set("accY",accY);
-  json.set("accZ",accZ);
-  json.set("gyroX",gyroX);
-  json.set("gyroY",gyroY);
-  json.set("gyroZ",gyroZ);
-  json.set("dB",dB);
+  json.set("accX", accX);
+  json.set("accY", accY);
+  json.set("accZ", accZ);
+  json.set("gyroX", gyroX);
+  json.set("gyroY", gyroY);
+  json.set("gyroZ", gyroZ);
+  json.set("dB", dB);
+  json.set("beatAvgDiff", beatAvgDiff);
+  json.set("sp02AvgDiff", sp02AvgDiff);
   json.set(F("ts/.sv"), F("timestamp"));
   Serial.printf("Set data with timestamp... %s\n", Firebase.setJSON(fbdo, path.c_str(), json) ? fbdo.to<FirebaseJson>().raw() : fbdo.errorReason().c_str());
   Serial.println("");
@@ -318,6 +324,8 @@ void readDB() {
     }
   }
 }
+
+
 
   void loop() {
     bufferLength = 100;  //buffer length of 100 stores 4 seconds of samples running at 25sps
@@ -434,11 +442,19 @@ void readDB() {
         ;
       }
 
-      //Send Data to Blynk App at regular intervals
+      //Send Data to App at regular intervals
       if (millis() - tsLastReport > REPORTING_PERIOD_MS) {
         updateData();
         tsLastReport = millis();
         printDisplay(beatAvg);
+      }
+      
+      if (millis() - diffLastReport > DIFFERENCE_PERIOD_MS) {
+        beatAvgDiff = abs(lastBeatAvg-beatAvg);
+        sp02AvgDiff = abs(lastSp02Avg-sp02Avg);
+        lastBeatAvg = beatAvg;
+        lastSp02Avg = sp02Avg;
+        diffLastReport = millis();
       }
     }
   }
@@ -455,10 +471,10 @@ void readDB() {
   display.cp437(true);         // Use full 256 char 'Code Page 437' font
 
   // Display "Hello, world!" with larger font size
-  display.println("ApneaAware");
+  display.println("  ApneaAware");
 
   // Display the heartbeat average value with larger font size
-  display.print("beatAvg:");
+  display.print("  beatAvg:");
   display.setTextSize(2);      // 2X scale
 
   display.println(value); // Print the heartbeat average value
