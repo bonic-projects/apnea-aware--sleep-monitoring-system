@@ -1,4 +1,3 @@
-
 #include <Arduino.h>
 #include <WiFi.h>
 #include <FirebaseESP32.h>
@@ -32,6 +31,20 @@ String path;
 #include "MAX30105.h"
 #include "spo2_algorithm.h"
 #include "heartRate.h"
+
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 32 // OLED display height, in pixels
+
+#define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+#define SCREEN_ADDRESS 0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
 
 MAX30105 particleSensor;
 
@@ -132,7 +145,15 @@ void setup() {
   Serial.begin(115200);
 
   Serial.print("Initializing Pulse Oximeter..");
+   if (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    for (;;); // Don't proceed, loop forever9        //
+   }
+     display.display();
 
+
+  // Clear the buffer
+  display.clearDisplay();
   // Initialize sensor
   if (!particleSensor.begin(Wire, I2C_SPEED_FAST))  //Use default I2C port, 400kHz speed
   {
@@ -417,6 +438,30 @@ void readDB() {
       if (millis() - tsLastReport > REPORTING_PERIOD_MS) {
         updateData();
         tsLastReport = millis();
+        printDisplay(beatAvg);
       }
     }
   }
+
+  void printDisplay(int value){
+   display.clearDisplay();
+
+  
+  display.setTextSize(1);      
+
+
+  display.setTextColor(SSD1306_WHITE); // Draw white text
+  display.setCursor(0, 0);     // Start at top-left corner
+  display.cp437(true);         // Use full 256 char 'Code Page 437' font
+
+  // Display "Hello, world!" with larger font size
+  display.println("ApneaAware");
+
+  // Display the heartbeat average value with larger font size
+  display.print("beatAvg:");
+  display.setTextSize(2);      // 2X scale
+
+  display.println(value); // Print the heartbeat average value
+
+  display.display();
+}
