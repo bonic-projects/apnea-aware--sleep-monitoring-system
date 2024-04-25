@@ -2,7 +2,9 @@
 /// Device Sensor Reading model
 class DeviceReading {
   int heartrate;
+  int heartrateDiff;
   int spo2;
+  int spo2Diff;
   int dB;
   double gyroX;
   double gyroY;
@@ -14,7 +16,9 @@ class DeviceReading {
 
   DeviceReading({
     required this.heartrate,
+    required this.heartrateDiff,
     required this.spo2,
+    required this.spo2Diff,
     required this.dB,
     required this.gyroX,
     required this.gyroY,
@@ -28,7 +32,9 @@ class DeviceReading {
   factory DeviceReading.fromMap(Map data) {
     return DeviceReading(
       heartrate: data['beatAvg'] ?? 0,
+      heartrateDiff: data['beatAvgDiff'] ?? 0,
       spo2: data['sp02Avg'] ?? 0,
+      spo2Diff: data['sp02AvgDiff'] ?? 0,
       dB: data['dB'] ?? 0,
       gyroX: data['gyroX'] ?? 0,
       gyroY: data['gyroY'] ?? 0,

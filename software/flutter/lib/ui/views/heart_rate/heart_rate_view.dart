@@ -1,4 +1,5 @@
 import 'package:apnea_aware/ui/common/ui_helpers.dart';
+import 'package:apnea_aware/widgets/ip.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -113,7 +114,39 @@ class HeartRateView extends StackedView<HeartRateViewModel> {
                     ),
                   ),
                 ),
-
+                if(viewModel.predictedClass!=null && viewModel.isAuto)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "AHI",
+                              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30),
+                            ),
+                            if (viewModel.predictions != null && viewModel.predictions!.isNotEmpty) ...[
+                              const SizedBox(height: 10),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Total number of events: ${viewModel.eventNo}'),
+                                  Text('Total sleep time in minute: ${viewModel.sleepTimeInMinute}'),
+                                  Text('Apnea Hypopnea Index (AHI): ${((viewModel.eventNo/(viewModel.sleepTimeInMinute)/60))} event/hour', style: const TextStyle(fontWeight: FontWeight.w600),),
+                                  const Divider(), // Add a divider between predictions
+                                ],
+                              ),
+                            ] else
+                              const Center(
+                                child: Text('No predictions available'),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
@@ -122,16 +155,6 @@ class HeartRateView extends StackedView<HeartRateViewModel> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          TextField(
-                            controller: TextEditingController(text: viewModel.serverIP),
-                            decoration: const InputDecoration(
-                              labelText: 'Enter Flask Server IP Address',
-                            ),
-                            onChanged: (value) {
-                              viewModel.setServerIP(value); // Set IP in viewmodel
-                            },
-                          ),
-                          const SizedBox(height: 20),
                           ElevatedButton(
                             onPressed: () {
                               viewModel.getPredictions().then((predictions) {
@@ -161,7 +184,7 @@ class HeartRateView extends StackedView<HeartRateViewModel> {
                         children: [
                           const Text('Automatic mode: '),
                           Switch(
-                            value: viewModel.switchValue,
+                            value: viewModel.isAuto,
                             onChanged: (newValue) {
                               viewModel.switchValueChanged(newValue);
 

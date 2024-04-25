@@ -17,17 +17,12 @@ class HeartRateViewModel extends ReactiveViewModel {
 
   @override
   List<ListenableServiceMixin> get listenableServices => [_databaseService];
-  String _serverIP = '192.168.29.207'; // Variable to store server IP
-  String get serverIP => _serverIP; // Variable to store server IP
 
   List<Map<String, dynamic>>? _predictions;
-  List<Map<String, dynamic>>? get predictions=> _predictions;
+  List<Map<String, dynamic>>? get predictions => _predictions;
 
   // Method to set server IP
-  void setServerIP(String value) {
-    _serverIP = value;
-    notifyListeners();
-  }
+
 
   String? _predictedClass;
   String? get predictedClass => _predictedClass;
@@ -37,25 +32,12 @@ class HeartRateViewModel extends ReactiveViewModel {
     setBusy(true);
 
     try {
-      final response = await http.post(
-        Uri.parse('http://$_serverIP:5000/predict'), // Use server IP
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, dynamic>{
-          'beatAvg': node!.heartrate,
-          'sp02Avg': node!.spo2,
-          'dB': node!.dB,
-        }),
-      );
+      final response = await _databaseService.getDeviceData();
 
-      log.i("Status: ${response.statusCode}");
-
-      if (response.statusCode == 200) {
+      if (response!= null) {
         log.i("Successfull request");
-        Map<String, dynamic> data = jsonDecode(response.body);
+        Map<String, dynamic> data = response;
         final predictions = data['predictions'];
-
         // Check if predictions is a List<Map<String, dynamic>>
         if (predictions is List) {
           _predictions = predictions.cast<Map<String, dynamic>>();
@@ -66,7 +48,7 @@ class HeartRateViewModel extends ReactiveViewModel {
 
         log.i("Data: ");
         log.i(_predictions);
-        if(_predictions!=null) {
+        if (_predictions != null) {
           // getClassWithHighestProbability(predictions);
 
           ///===========================
@@ -87,12 +69,9 @@ class HeartRateViewModel extends ReactiveViewModel {
             }
           }
 
-          if(predictedClass == "bad") {
-            // _notificationService.send();
-          }
-
           _predictedClass = predictedClass;
           log.i("_predictedClass: $_predictedClass");
+
           ///==============================
         }
 
@@ -111,7 +90,7 @@ class HeartRateViewModel extends ReactiveViewModel {
   bool _switchValue = false;
   Timer? _timer;
 
-  bool get switchValue => _switchValue;
+  bool get isAuto => _switchValue;
 
   void switchValueChanged(bool newValue) {
     _switchValue = newValue;
@@ -123,9 +102,36 @@ class HeartRateViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
+  int _ahi = 0;
+  int get ahi => _ahi;
+  int _eventNo = 0;
+  int get eventNo => _eventNo;
+  int _sleepTimes = 0;
+  int _sleepTimeInMinute = 0;
+  int get sleepTimeInMinute => _sleepTimeInMinute;
+  void calculateAhi() {
+    _sleepTimes++;
+    _sleepTimeInMinute = (_sleepTimes * 5) ~/ 60;
+    if (predictedClass == "apnea") {
+      _eventNo++;
+    } else if (predictedClass == "hypopnea") {
+      _eventNo++;
+    }
+    // predictions!.map((prediction) {
+    //   if (prediction['status'] == "apnea") {
+    //     _eventNo++;
+    //   } else if (prediction['status'] == "hypopnea") {
+    //     _eventNo++;
+    //   }
+    // });
+  }
+
   void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
-      getPredictions();
+    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
+      List<dynamic>? predictions = await getPredictions();
+      if (predictions != null) {
+        calculateAhi();
+      }
     });
   }
 

@@ -41,7 +41,7 @@ class DetailedViewModel extends ReactiveViewModel {
   void _updateHeartRateSpots() {
     if (node != null) {
       heartRateCount++;
-      FlSpot s = FlSpot(heartRateCount.toDouble(), node!=null ? node!.heartrate.toDouble() + 40 : 0);
+      FlSpot s = FlSpot(heartRateCount.toDouble(), node!=null ? node!.heartrate.toDouble() : 0);
       heartRateSpots.add(s);
       if (heartRateCount > 50) {
         heartRateSpots.removeAt(0);
@@ -56,7 +56,7 @@ class DetailedViewModel extends ReactiveViewModel {
   void _updateSpo2Spots() {
     if (node != null) {
       spo2Count++;
-      FlSpot s = FlSpot(spo2Count.toDouble(), node!=null ? node!.spo2.toDouble() + 30 : 0);
+      FlSpot s = FlSpot(spo2Count.toDouble(), node!=null ? node!.spo2.toDouble() : 0);
       spo2Spots.add(s);
       if (spo2Count > 50) {
         spo2Spots.removeAt(0);

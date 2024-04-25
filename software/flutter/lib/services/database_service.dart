@@ -15,12 +15,12 @@ class DatabaseService with ListenableServiceMixin {
   DeviceReading? _node;
   DeviceReading? get node => _node;
 
-  Future<DeviceData?> getDeviceData() async {
-    DatabaseReference dataRef = _db.ref('/devices/$dbCode/reading');
+  Future getDeviceData() async {
+    DatabaseReference dataRef = _db.ref('/devices/$dbCode/ml');
     final value = await dataRef.once();
     if (value.snapshot.exists) {
       log.i("New data");
-      return DeviceData.fromMap(value.snapshot.value as Map);
+      return value.snapshot.value;
     }
     return null;
   }
@@ -37,11 +37,11 @@ class DatabaseService with ListenableServiceMixin {
     try {
       log.i('try called');
       starCountRef.onValue.listen((DatabaseEvent event) {
-        log.i("Reading..");
+        // log.i("Reading..");
         if (event.snapshot.exists) {
-          log.i("DATA RECIEVED..");
+          // log.i("DATA RECIEVED..");
           _node = DeviceReading.fromMap(event.snapshot.value as Map);
-          log.v(_node); //data['time']
+          // log.v(_node); //data['time']
           notifyListeners();
         }
       });
