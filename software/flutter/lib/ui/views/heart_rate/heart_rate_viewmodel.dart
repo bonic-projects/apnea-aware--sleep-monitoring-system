@@ -102,8 +102,8 @@ class HeartRateViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
-  int _ahi = 0;
-  int get ahi => _ahi;
+  double _ahi = 0;
+  double get ahi => _ahi;
   int _eventNo = 0;
   int get eventNo => _eventNo;
   int _sleepTimes = 0;
@@ -117,6 +117,8 @@ class HeartRateViewModel extends ReactiveViewModel {
     } else if (predictedClass == "hypopnea") {
       _eventNo++;
     }
+    _ahi = _eventNo / (_sleepTimeInMinute/60);
+    notifyListeners();
     // predictions!.map((prediction) {
     //   if (prediction['status'] == "apnea") {
     //     _eventNo++;
