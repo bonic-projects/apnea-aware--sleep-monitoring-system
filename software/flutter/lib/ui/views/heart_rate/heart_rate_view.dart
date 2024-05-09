@@ -135,6 +135,8 @@ class HeartRateView extends StackedView<HeartRateViewModel> {
                                   Text('Total number of events: ${viewModel.eventNo}'),
                                   Text('Total sleep time in minute: ${viewModel.sleepTimeInMinute}'),
                                   Text('Apnea Hypopnea Index (AHI): ${viewModel.ahi.toStringAsFixed(2)} event/hour', style: const TextStyle(fontWeight: FontWeight.w600),),
+                                  Text('Severity: ${viewModel.severity}', 
+                                  style: const TextStyle(fontWeight: FontWeight.w600),),
                                   const Divider(), // Add a divider between predictions
                                 ],
                               ),

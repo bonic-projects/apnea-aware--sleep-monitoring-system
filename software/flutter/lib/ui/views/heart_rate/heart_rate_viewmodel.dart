@@ -109,6 +109,8 @@ class HeartRateViewModel extends ReactiveViewModel {
   int _sleepTimes = 0;
   int _sleepTimeInMinute = 0;
   int get sleepTimeInMinute => _sleepTimeInMinute;
+  String _severity = "";
+  String get severity => _severity;
   void calculateAhi() {
     _sleepTimes++;
     _sleepTimeInMinute = (_sleepTimes * 5) ~/ 60;
@@ -118,18 +120,30 @@ class HeartRateViewModel extends ReactiveViewModel {
       _eventNo++;
     }
     _ahi = _eventNo / (_sleepTimeInMinute/60);
+
+     // Ensure AHI is within the range of 0 to 30
+    if (_ahi > 36) {
+        _ahi = 36;
+    } else if (_ahi < 0) {
+        _ahi = 0;
+    }
+
+    //severity
+    if(_ahi > 1 && _ahi < 5){
+      _severity = "Normal Sleep Apnea";
+    } else if(_ahi > 5 && _ahi < 15){
+      _severity = "Mild Sleep Apnea";
+    } else if(_ahi > 15 && _ahi < 30){
+      _severity = "Moderate Sleep Apnea";
+    } else if(_ahi > 30){
+      _severity = "Severe Sleep Apnea";
+    }
+
     notifyListeners();
-    // predictions!.map((prediction) {
-    //   if (prediction['status'] == "apnea") {
-    //     _eventNo++;
-    //   } else if (prediction['status'] == "hypopnea") {
-    //     _eventNo++;
-    //   }
-    // });
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
+    _timer = Timer.periodic(const Duration(seconds: 60), (Timer timer) async { //time increased to one second
       List<dynamic>? predictions = await getPredictions();
       if (predictions != null) {
         calculateAhi();
